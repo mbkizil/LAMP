@@ -28,7 +28,7 @@
 
 
 ## 🎉 News 
-- [] Client inference is coming soon.
+- [ ] Client inference is coming soon.
 - [x] Dec 7, 2025: Gradio demo is ready to use. 
 - [x] Dec 7, 2025: We propose [LAMP](https://cyberiada.github.io/LAMP/) 
 
