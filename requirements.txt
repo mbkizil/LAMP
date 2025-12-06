@@ -1,0 +1,25 @@
+# wan@git+https://github.com/Wan-Video/Wan2.1
+decord==0.6.0
+diffusers==0.35.2
+easydict==1.13
+gradio==6.0.2
+numpy==2.3.5
+opencv_python==4.11.0.86
+peft==0.17.1
+Pillow==12.0.0
+qwen_vl_utils==0.0.14
+scipy==1.16.3
+torch==2.8.0
+torchvision==0.23.0
+tqdm==4.67.1
+transformers==4.56.2
+xfuser==0.4.5
+einops
+scikit-image
+scikit-learn
+pycocotools
+timm
+onnxruntime-gpu
+BeautifulSoup4
+ninja
+packaging
