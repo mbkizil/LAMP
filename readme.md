@@ -15,7 +15,7 @@
     <strong>Duygu Ceylan</strong>
     <br>
     <br>
-        <a href="https://arxiv.org/abs/2512.03619">arXiv</a>
+        <a href="https://arxiv.org/abs/2512.03619">arXiv</a>&nbsp;&nbsp;&nbsp;
         <a href="https://cyberiada.github.io/LAMP/">Webpage</a>
     <br>
 </p>
