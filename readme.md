@@ -28,6 +28,7 @@
 
 
 ## 🎉 News 
+- [] Client inference is coming soon.
 - [x] Dec 7, 2025: Gradio demo is ready to use. 
 - [x] Dec 7, 2025: We propose [LAMP](https://cyberiada.github.io/LAMP/) 
 
@@ -47,9 +48,11 @@ pip install wan@git+https://github.com/Wan-Video/Wan2.1
 
 ## Download Models
 
-Download the VACE and fine-tuned Qwen2.5-VL-7B-Instruct models using [download.sh](download.sh)
+Download the [VACE](https://huggingface.co/Wan-AI/Wan2.1-VACE-1.3B) and finetuned [Qwen2.5-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct) model weight using [download.sh](download.sh)
+
+
 ```bash
-chmo +x download.sh
+chmod +x download.sh
 ./download.sh
 ```
 
@@ -71,7 +74,7 @@ This script will:
 
 > Launch a local web server (default at http://127.0.0.1:8890).
 
-Once inside the UI, you can input prompts like "Object: A ship sailing right. Camera: Orbit smoothly around the ship" to see the generated DSL, 3D visualization, and final video side-by-side.
+
 
 
 > 💡**Notes from VACE**: 
