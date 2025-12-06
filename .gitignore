@@ -3,4 +3,5 @@ __pycache__/
 .ipynb_checkpoints
 venv/
 .env
+src/vace_lib/models/
 .DS_Store

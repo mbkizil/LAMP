@@ -15,20 +15,21 @@
     <strong>Duygu Ceylan</strong>
     <br>
     <br>
-        <a href="https://arxiv.org/abs/2512.03619"><img src='https://info.arxiv.org/brand/images/brand-logo-primary.jpg' alt='Paper PDF'></a>
-        <a href="https://cyberiada.github.io/LAMP/"><img src='https://info.arxiv.org/brand/images/brand-logo-primary.jpg' alt='Project Page'></a>
+        <a href="https://arxiv.org/abs/2512.03619">arXiv</a>
+        <a href="https://cyberiada.github.io/LAMP/">Webpage</a>
     <br>
 </p>
 
 
 ## Introduction
-<strong>LAMP</strong> {}
+<strong>LAMP</strong> defines a motion domain-specific language (DSL), inspired by cinematography conventions. By harnessing program synthesis capabilities of LLMs, LAMP generates structured motion programs from natural language, which are deterministically mapped to 3D trajectories.
 
 <img src='./assets/teaser.jpg'>
 
 
 ## 🎉 News 
-- [x] Dec 7, 2025: We propose [LAMP](https://cyberiada.github.io/LAMP/) {}
+- [x] Dec 7, 2025: Gradio demo is ready to use. 
+- [x] Dec 7, 2025: We propose [LAMP](https://cyberiada.github.io/LAMP/) 
 
 
 
@@ -46,8 +47,11 @@ pip install wan@git+https://github.com/Wan-Video/Wan2.1
 
 ## Download Models
 
-
-
+Download the VACE and fine-tuned Qwen2.5-VL-7B-Instruct models using [download.sh](download.sh)
+```bash
+chmo +x download.sh
+./download.sh
+```
 
 ## 🚀 Usage
 In LAMP, users act as a director, providing natural language descriptions for both object and camera behaviors. The system translates these prompts into precise 3D Motion Programs and conditions the video generation process to produce cinematic shots.
