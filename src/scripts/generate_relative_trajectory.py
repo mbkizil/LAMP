@@ -1,14 +1,11 @@
 import numpy as np
-from scipy.spatial.transform import Rotation # Sadece 'look_at' için
-import random # Jitter için eklendi
-import re # (YENİ) Rotation parser için eklendi
-import argparse # (YENİ) Main için eklendi
-import sys # (YENİ) Main için eklendi
+from scipy.spatial.transform import Rotation 
+import random # For jitter
+import re 
+import argparse 
+import sys 
 
-# --- Gerekli Yardımcılar (Eski kodunuzda varsayıldı) ---
 
-# Z_OFFSET: Kameranın objeye olan varsayılan 'dinlenme' mesafesi (pozitif olmalı)
-# Lütfen bu sabiti kendi kodunuzdaki değeriyle güncelleyin.
 SPACE_ORIGIN = 256.0
 SPACE_SCALE = 256.0
 MIN_VAL = 0
@@ -16,13 +13,13 @@ MAX_VAL = 512
 Z_OFFSET = 100/256
 
 def lerp(a, b, t):
-# ... (Mevcut kod - Değişiklik yok) ...
+
     """Lineer enterpolasyon: a'dan b'ye t kadar git."""
     return a * (1.0 - t) + b * t
 
-# (YENİ) 3D Vektör Lerp (Rotation Track için eklendi)
+
 def lerp_3d(a_tuple, b_tuple, t):
-# ... (Mevcut kod - Değişiklik yok) ...
+
     """İki (x,y,z) tuple'ı arasında lineer enterpolasyon."""
     return (
         lerp(a_tuple[0], b_tuple[0], t),
@@ -30,9 +27,9 @@ def lerp_3d(a_tuple, b_tuple, t):
         lerp(a_tuple[2], b_tuple[2], t)
     )
 
-# (YENİ) Vektör Normalleştirme (Rotation Track için eklendi)
+
 def normalize_vector(v_tuple):
-# ... (Mevcut kod - Değişiklik yok) ...
+
     """Bir (x,y,z) tuple'ını normalize eder, (vektör, büyüklük) döndürür."""
     v = np.array(v_tuple)
     mag = np.linalg.norm(v)
@@ -42,9 +39,9 @@ def normalize_vector(v_tuple):
     return (v_norm[0], v_norm[1], v_norm[2]), mag
 
 
-# (YENİ) Easing (Hızlanma/Yavaşlama) fonksiyonları
+
 def apply_easing(t, style):
-# ... (Mevcut kod - Değişiklik yok) ...
+
     """
     Verilen 't' (0.0-1.0) değerine DSL easing stilini uygular.
     """
@@ -63,20 +60,20 @@ def apply_easing(t, style):
         if t < 0.5:
             return 0.5 * (1.0 - (1.0 - 2.0 * t) * (1.0 - 2.0 * t))
         return 0.5 + 0.5 * (2.0 * t - 1.0) * (2.0 * t - 1.0)
-    else: # 'linear' veya bilinmeyen
+    else: # 'linear'
         return t
 
-# (YENİ) Jitter (Titreme) fonksiyonu
+
 def get_jitter_offset(style):
-# ... (Mevcut kod - Değişiklik yok) ...
+
     """
     DSL jitter stiline göre rastgele bir pozisyon ofseti döndürür.
     """
     if style == 'low':
-        mag = 0.002 # Düşük titreme büyüklüğü
+        mag = 0.002 
     elif style == 'high':
-        mag = 0.005 # Yüksek titreme büyüklüğü
-    else: # 'none'
+        mag = 0.005 
+    else: 
         return (0.0, 0.0, 0.0)
     
     return (random.uniform(-mag, mag), 
@@ -90,16 +87,16 @@ def calculate_look_at_quaternion(cam_pos, obj_pos, fixed_axis=None, roll_angle_r
     Kameranın 'obj_pos' noktasına bakması için gerekli quaternion'u hesaplar.
     GÜNCELLENDİ: Artık 'roll_angle_rad' parametresi alıyor.
     """
-    # Bakış vektörünü (direction) al
+    
     look_at_vector = (obj_pos[0] - cam_pos[0], 
                       obj_pos[1] - cam_pos[1], 
                       obj_pos[2] - cam_pos[2])
 
-    # Vektörü normalize et
+    
     v_norm, magnitude = normalize_vector(look_at_vector)
     
     if magnitude == 0.0:
-        # Obje kameranın içinde, identity quaternion döndür
+        
         return 1.0, 0.0, 0.0, 0.0
 
     vx, vy, vz = v_norm
