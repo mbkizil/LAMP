@@ -1,0 +1,1 @@
+right no no 30 0 0 right no no 30 0 0 no near_up no 0 -35 0 no near_up no 0 -35 0

@@ -1,0 +1,100 @@
+from .scene import setup_scene  # noqa
+from .floor import plot_floor
+from .camera import Camera
+from .sampler import get_frameidx
+from .meshes_w_cams import MeshesWithCameras
+from .materials import CAM_TO_MATERIAL, MESH_TO_MATERIAL
+
+
+def render(
+    traj,
+    vertices,
+    faces,
+    cam_segments=None,
+    char_segments=None,
+    # ----------------- #
+    mode="image",
+    exact_frame=None,
+    num=8,
+    canonicalize=True,
+    denoising=True,
+    oldrender=True,
+    res="high",
+    mesh_color="Blues",
+    # cam_color="viridis",
+    cam_color="Purples",
+    init=False,
+):
+    assert mode in ["image", "video", "video_accumulate"]
+    print('1111mode',mode)
+    if not init:
+        # Setup the scene (lights / render engine / resolution etc)
+        setup_scene(res=res, denoising=denoising, oldrender=oldrender)
+
+    data = MeshesWithCameras(
+        cams=traj,
+        vertices=vertices,
+        faces=faces,
+        mode=mode,
+        canonicalize=canonicalize,
+        always_on_floor=False,
+        cam_color=cam_color,
+        mesh_color=mesh_color,
+    )
+
+    if not init:
+        # Create a floor
+        plot_floor(data.data)
+
+    # initialize the camera
+    Camera(first_root=data.get_root(0), mode=mode, is_mesh=True)
+
+    nframes = len(data)
+    frames_to_keep = num if mode == "image" else nframes
+    frame_indices = get_frameidx(
+        mode=mode,
+        nframes=nframes,
+        exact_frame=exact_frame,
+        frames_to_keep=frames_to_keep,
+    )
+    frame_to_keep_indices = list(
+        get_frameidx(
+            mode=mode,
+            nframes=nframes,
+            exact_frame=exact_frame,
+            frames_to_keep=num,
+        )
+    )
+    nframes_to_render = len(frame_indices)
+
+    imported_obj_names = []
+    for index, frame_index in enumerate(frame_indices):
+        if cam_segments is None or char_segments is None:
+            print('mode',mode)
+            if mode == "image":
+                frac = index / (nframes_to_render - 1)
+                cam_mat = data.get_cam_sequence_mat(frac)
+                mesh_mat = data.get_mesh_sequence_mat(frac)
+            else:  # Video mode, no color hue
+                cam_mat = data.get_cam_sequence_mat(1.0)
+                mesh_mat = data.get_mesh_sequence_mat(1.0)
+        else:
+            # print(cam_segments[frame_index])
+            frac = index / (nframes_to_render - 1)
+            frac = frac * 2 - 1
+            cam_mat = data.get_cam_sequence_mat(frac)
+            # cam_mat = CAM_TO_MATERIAL[cam_segments[frame_index]]
+            mesh_mat = MESH_TO_MATERIAL[char_segments[frame_index]]
+
+        keep_frame = frame_index in frame_to_keep_indices
+        _, cam_name = data.load_in_blender(
+            frame_index, cam_mat, mesh_mat, mode, keep_frame
+        )
+        curve_name = data.show_cams(frame_index + 1, mode)
+        # if index == 25 or index == 49 or index == 73:
+        #     # imported_obj_names.extend([cam_name])
+        #     continue
+        # else:
+        imported_obj_names.extend([cam_name, curve_name])
+
+    return imported_obj_names

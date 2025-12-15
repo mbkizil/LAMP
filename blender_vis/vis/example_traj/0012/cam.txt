@@ -1,0 +1,1 @@
+free-form t_x: right t_y: near_up t_z: no yaw: 35 tilt: 0 roll: 0 t_x: right t_y: near_up t_z: no yaw: 35 tilt: 0 roll: 0 t_x: right t_y: near_up t_z: no yaw: 35 tilt: 0 roll: 0 t_x: right t_y: near_up t_z: no yaw: 35 tilt: 0 roll: 0
