@@ -349,6 +349,13 @@ def full_app():
                         prompt_suffix = "  Generate Camera Tags: "
                     elif generation_type == "bbox":
                         prompt_suffix = ". Generate Object Trajectory: "
+                    elif generation_type == "edit":
+                        prompt_suffix = ". Generate Edit Tags: "
+                        if conversation_history and conversation_history[-1]["role"] == "assistant":
+                            print("added prefix\n\n")
+                            last_response = conversation_history[-1]["content"]
+                            # Eski cevap + Boşluk + Yeni talimat
+                            message["text"] = last_response + " " + message["text"]
                     
                     message["text"] = message["text"] + prompt_suffix
                     
@@ -378,7 +385,7 @@ def full_app():
                         else:
                             yield f"{final_qwen_output}\n\n**System:** `bbox.json` created successfully. You can now click 'Generate Camera'.", None, gr.update(visible=False)
                     
-                    elif generation_type == "camera":
+                    elif generation_type == "camera" or generation_type == "edit":
                         # Generate Camera, Save, and GENERATE TRAJECTORY VIDEO
                         yield f"{final_qwen_output}\n\n**System:** Camera text received. Running camera processing chain...", None, gr.update(visible=False)
                         
@@ -460,6 +467,7 @@ def full_app():
                 with gr.Row():
                     generate_camera_btn = gr.Button("🎥 Generate Camera", variant="primary", scale=1)
                     generate_bbox_btn = gr.Button("📦 Generate Bbox", variant="secondary", scale=1)
+                    generate_edit_btn = gr.Button("🎥 Edit Camera", variant="tertiarty", scale=1)
 
                 
                 # The outputs for main generation now includes the group visibility
@@ -487,6 +495,15 @@ def full_app():
                     show_progress=True
                 )
 
+                def edit_click(message):
+                    yield from collect_all_inputs_base(message, "edit")
+
+                generate_edit_btn.click(
+                    fn=edit_click,
+                    inputs=[chat_input],
+                    outputs=outputs_list,
+                    show_progress=True
+                )
                 # Chat input submit (Default to Camera)
                 def chat_submit(message):
                     yield from collect_all_inputs_base(message, "camera")
