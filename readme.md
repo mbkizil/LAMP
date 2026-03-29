@@ -1,6 +1,6 @@
 <p align="center">
 
-<h1 align="center">LAMP: Language-Assisted Motion Planning</h1>
+<h1 align="center">[CVPR 2026] LAMP: Language-Assisted Motion Planning</h1>
 <p align="center">
     <strong>M. Burak Kizil</strong>
     ·
