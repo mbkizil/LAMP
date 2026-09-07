@@ -16,6 +16,8 @@
     <br>
     <br>
         <a href="https://arxiv.org/abs/2512.03619">arXiv</a>&nbsp;&nbsp;&nbsp;
+        <a href="https://huggingface.co/datasets/burakkizil/LAMP">Dataset</a>&nbsp;&nbsp;&nbsp;
+        <a href="https://huggingface.co/burakkizil/LAMP-edit">Model Weights</a>&nbsp;&nbsp;&nbsp;
         <a href="https://cyberiada.github.io/LAMP/">Webpage</a>
     <br>
 </p>
@@ -28,7 +30,8 @@
 
 
 ## 🎉 News 
-- [ ] Client inference is coming soon.
+- [x] Sep 7, 2026: An automatic camera trajectory generation [**Demo**](https://github.com/mbkizil/Generate-Camera-Trajectory) is shared!
+- [x] Sep 7, 2026: Dataset is uploaded to [HuggingFace](https://huggingface.co/datasets/burakkizil/LAMP)
 - [x] Dec 7, 2025: Gradio demo is ready to use. 
 - [x] Dec 7, 2025: We propose [LAMP](https://cyberiada.github.io/LAMP/) 
 
